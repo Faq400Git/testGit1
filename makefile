@@ -7,7 +7,9 @@ all: pgm001.rpgle
 
 #depts.sqlrpgle: depts.dspf
 #employees.sqlrpgle: emps.dspf
-pgm001.rpgle
+
+pgm001.rpgle:
+
 
 
 
