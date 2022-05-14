@@ -13,9 +13,7 @@
 
       //---------------------------------------------------------------*
 
-     Fdepts     CF   E             WorkStn Sfile(SFLDta:Rrn)
-     F                                     IndDS(WkStnInd)
-     F                                     InfDS(fileinfo)
+        Dcl-F depts WORKSTN Sfile(SFLDta:Rrn) IndDS(WkStnInd) InfDS(fileinfo);
 
           Dcl-S Exit Ind Inz(*Off);
 
@@ -35,16 +33,16 @@
             SflDsp         Ind        Pos(95);
           End-DS;
 
-     DFILEINFO         DS
-     D  FILENM           *FILE
-     D  CPFID                 46     52
-     D  MBRNAM               129    138
-     D  FMTNAM               261    270
-     D  CURSED               370    371B 0
-     D  FUNKEY               369    369
-     D  SFLRRN_TOP           378    379B 0
-     D  SF_RRN               376    377I 0
-     D  SF_RCDS              380    381I 0
+        Dcl-DS FILEINFO;
+          FILENM         Char(NaN)  Pos(E);
+          CPFID          Char(7)    Pos(46);
+          MBRNAM         Char(10)   Pos(129);
+          FMTNAM         Char(10)   Pos(261);
+          CURSED         Bindec(4)  Pos(370);
+          FUNKEY         Char(1)    Pos(369);
+          SFLRRN_TOP     Bindec(4)  Pos(378);
+          SF_RRN         Int(5)     Pos(376);
+          SF_RCDS        Int(5)     Pos(380);
 
       //---------------------------------------------------------------*
       *

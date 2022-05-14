@@ -6,7 +6,8 @@
        dcl-s version char(10);
        dcl-s testo   char(30);
 
-       // Versione del programma       version='1.0';
+       // Versione del programma       
+       version='1.1';
        testo='Versione '+Version;
        dsply Testo  ;
        exsr fine;

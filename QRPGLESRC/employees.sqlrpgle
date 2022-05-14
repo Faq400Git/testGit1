@@ -14,7 +14,7 @@ End-Pi;
 Dcl-F emps WORKSTN Sfile(SFLDta:Rrn) IndDS(WkStnInd) InfDS(fileinfo);
 
 Dcl-S Exit Ind Inz(*Off);
-dcl-s okSqlcode '00000';
+dcl-c OKSQLCODE '00000';
 
 Dcl-S Rrn          Zoned(4:0) Inz;
 
@@ -89,9 +89,9 @@ Dcl-Proc LoadSubfile;
 
   EXEC SQL OPEN empCur;
 
-  if (sqlstate = okSqlcode);
+  if (sqlstate = OKSQLCODE);
 
-    dou (sqlstate <> okSqlcode);
+    dou (sqlstate <> OKSQLCODE);
       EXEC SQL
                   FETCH NEXT FROM empCur
                   INTO :Employee.EMPNO,
@@ -99,7 +99,7 @@ Dcl-Proc LoadSubfile;
                        :Employee.LASTNAME,
                        :Employee.JOB;
 
-      if (sqlstate = okSqlcode);
+      if (sqlstate = OKSQLCODE);
         XID   = Employee.EMPNO;
         XNAME = %TrimR(Employee.LASTNAME) + ', '
                          + %TrimR(Employee.FIRSTNME);
