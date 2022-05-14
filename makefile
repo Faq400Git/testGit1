@@ -2,13 +2,13 @@ BIN_LIB=FAQ400
 LIBLIST=$(BIN_LIB) SAMPLEDB
 SHELL=/QOpenSys/usr/bin/qsh
 
-#all: depts.sqlrpgle employees.sqlrpgle
-all: pgm001.rpgle
-
-#depts.sqlrpgle: depts.dspf
-#employees.sqlrpgle: emps.dspf
+all: pgm01.rpgle depts.sqlrpgle employees.sqlrpgle
+#all: pgm001.rpgle
 
 pgm001.rpgle:
+depts.sqlrpgle: depts.dspf
+employees.sqlrpgle: emps.dspf
+
 
 
 
