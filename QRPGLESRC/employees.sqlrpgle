@@ -5,19 +5,20 @@ Dcl-Pi EMPLOYEES;
   DEPTNO Char(3);
 End-Pi;
 
-      //---------------------------------------------------------------*
+// ---------------------------------------------------------------*
 
-/copy 'qrpgleref/constants.rpgle'
+/COPY 'qrpgleref/constants.rpgle'
 
-      //---------------------------------------------------------------*
+// ---------------------------------------------------------------*
 
 Dcl-F emps WORKSTN Sfile(SFLDta:Rrn) IndDS(WkStnInd) InfDS(fileinfo);
 
 Dcl-S Exit Ind Inz(*Off);
+dcl-s okSqlcode '00000';
 
 Dcl-S Rrn          Zoned(4:0) Inz;
 
-Dcl-DS WkStnInd;
+Dcl-DS WkStnInd; 
   ProcessSCF     Ind        Pos(21);
   ReprintScf     Ind        Pos(22);
   Error          Ind        Pos(25);
@@ -35,14 +36,14 @@ Dcl-DS FILEINFO;
   FUNKEY         Char(1)    Pos(369);
 End-DS;
 
-      //---------------------------------------------------------------*
-      //
+// ---------------------------------------------------------------*
+
 Dcl-S Index Int(5);
 
 Dcl-Ds Employee ExtName('EMPLOYEE') Alias Qualified;
 End-Ds;
 
-        //------------------------------------------------------------reb04
+// ------------------------------------------------------------reb04
 Exit = *Off;
 LoadSubfile();
 
@@ -61,7 +62,7 @@ Enddo;
 *INLR = *ON;
 Return;
 
-        //------------------------------------------------------------
+// ------------------------------------------------------------
 
 Dcl-Proc ClearSubfile;
   SflDspCtl = *Off;
@@ -71,7 +72,7 @@ Dcl-Proc ClearSubfile;
 
   SflDspCtl = *On;
 
-  rrn = 0;
+  Rrn = 0;
 End-Proc;
 
 Dcl-Proc LoadSubfile;
@@ -83,14 +84,14 @@ Dcl-Proc LoadSubfile;
 
   EXEC SQL DECLARE empCur CURSOR FOR
               SELECT EMPNO, FIRSTNME, LASTNAME, JOB
-              FROM EMPLOYEE
+              FROM Employee
               WHERE WORKDEPT = :DEPTNO;
 
   EXEC SQL OPEN empCur;
 
-  if (sqlstate = '00000');
+  if (sqlstate = okSqlcode);
 
-    dou (sqlstate <> '00000');
+    dou (sqlstate <> okSqlcode);
       EXEC SQL
                   FETCH NEXT FROM empCur
                   INTO :Employee.EMPNO,
@@ -98,13 +99,13 @@ Dcl-Proc LoadSubfile;
                        :Employee.LASTNAME,
                        :Employee.JOB;
 
-      if (sqlstate = '00000');
+      if (sqlstate = okSqlcode);
         XID   = Employee.EMPNO;
         XNAME = %TrimR(Employee.LASTNAME) + ', '
                          + %TrimR(Employee.FIRSTNME);
         XJOB  = Employee.JOB;
 
-        rrn += 1;
+        Rrn += 1;
         Write SFLDTA;
       endif;
     enddo;
@@ -113,7 +114,7 @@ Dcl-Proc LoadSubfile;
 
   EXEC SQL CLOSE empCur;
 
-  If (rrn > 0);
+  If (Rrn > 0);
     SflDsp = *On;
     SFLRRN = 1;
   Endif;
@@ -138,7 +139,7 @@ Dcl-Proc HandleInputs;
     If (XSEL <> *Blank);
       XSEL = *Blank;
       Update SFLDTA;
-      SFLRRN = rrn;
+      SFLRRN = Rrn;
     Endif;
   Enddo;
 End-Proc;

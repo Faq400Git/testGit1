@@ -8,7 +8,7 @@
 
        // Versione del programma       version='1.0';
        testo='Versione '+Version;
-       dsply testo  ;
+       dsply Testo  ;
        exsr fine;
        //---------------------------
        // fine
