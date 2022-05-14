@@ -14,7 +14,7 @@ pgm001.rpgle:
 
 
 %.rpgle:
-	system -s "CHGATR OBJ('./qrpglesrc/$*.sqlrpgle') ATR(*CCSID) VALUE(280)"
+	system -s "CHGATR OBJ('./qrpglesrc/$*.rpgle') ATR(*CCSID) VALUE(280)"
 	liblist -a $(LIBLIST);\
 	system "CRTBNDRPG PGM($(BIN_LIB)/$*) SRCSTMF('./qrpglesrc/$*.rpgle') COMMIT(*NONE) DBGVIEW(*SOURCE) OPTION(*EVENTF)"
 
