@@ -34,7 +34,7 @@
           End-DS;
 
         Dcl-DS FILEINFO;
-          FILENM         Char(NaN)  Pos(E);
+          //FILENM         Char(NaN)  Pos(E);
           CPFID          Char(7)    Pos(46);
           MBRNAM         Char(10)   Pos(129);
           FMTNAM         Char(10)   Pos(261);
